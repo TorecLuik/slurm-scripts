@@ -9,7 +9,7 @@
 
 echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH "
 
-singularity run $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
+singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
