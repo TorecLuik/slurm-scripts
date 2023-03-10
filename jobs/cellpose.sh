@@ -17,5 +17,8 @@ singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.si
 	--gtfolder $DATA_PATH/data/gt \
 	--local \
 	-nmc \
-	$CYTOMINE_HOST $CYTOMINE_PUBLIC_KEY $YTOMINE_PRIVATE_KEY $CYTOMINE_ID_PROJECT $CYTOMINE_ID_SOFTWARE \
-	$DIAMETER $PROB_THRESHOLD $NUC_CHANNEL $USE_GPU $CP_MODEL
+	--diameter $DIAMETER \ 
+	--prob_threshold $PROB_THRESHOLD \
+	--nuc_channel $NUC_CHANNEL \
+	--use_gpu $USE_GPU \
+	--cp_model $CP_MODEL
