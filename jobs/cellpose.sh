@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=w_nucleisegmentation-cellpose
+#SBATCH --job-name=cellpose
 #SBATCH --cpus-per-task=4
-#SBATCH --time=01:00:00
-#SBATCH --gres=gpu:a100:1
-#SBATCH --mem=8GB
+#SBATCH --time=00:15:00
+#SBATCH --gres=gpu:1g.10gb:1
+#SBATCH --mem=5GB
 #SBATCH --output=cellpose-%4j.log
 #SBATCH --mail-user=t.t.luik@amsterdamumc.nl
 #SBATCH --mail-type=END,FAIL
