@@ -8,7 +8,7 @@
 #SBATCH --mail-user=t.t.luik@amsterdamumc.nl
 #SBATCH --mail-type=END,FAIL
 
-echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | $CYTOMINE_HOST $CYTOMINE_PUBLIC_KEY $YTOMINE_PRIVATE_KEY $CYTOMINE_ID_PROJECT $CYTOMINE_ID_SOFTWARE \
+echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
 	$DIAMETER $PROB_THRESHOLD $NUC_CHANNEL $USE_GPU $CP_MODEL"
 
 singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
@@ -16,9 +16,8 @@ singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.si
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
 	--local \
-	-nmc \
-	--diameter $DIAMETER \ 
-	--prob_threshold $PROB_THRESHOLD \
+	--diameter $DIAMETER --prob_threshold $PROB_THRESHOLD \
 	--nuc_channel $NUC_CHANNEL \
 	--use_gpu $USE_GPU \
-	--cp_model $CP_MODEL
+	--cp_model $CP_MODEL \
+	-nmc
