@@ -6,7 +6,7 @@
 # You can override all of these settings on the commandline, e.g. sbatch <this-script> --job-name=newJob
 
 # Give your job a name, so you can recognize it in the queue overview
-#SBATCH --job-name=cellpose
+#SBATCH --job-name=cellprofiler
 
 # Define, how many cpus you need. Here we ask for 4 CPU cores.
 #SBATCH --cpus-per-task=4
@@ -26,7 +26,7 @@
 #SBATCH --mem=5GB
 
 # Define a name for the logfile of this job. %4j will add the 'j'ob ID variable
-#SBATCH --output=cellpose-%4j.log
+#SBATCH --output=cellprofiler-%4j.log
 
 # Turn on mail notification. There are many possible self-explaining values:
 # NONE, BEGIN, END, FAIL, ALL (including all aforementioned)
@@ -41,19 +41,16 @@
 ##############################
 
 # Std out will get parsed into the logfile, so it is useful to log all your steps and variables
-echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
-	$DIAMETER $PROB_THRESHOLD $NUC_CHANNEL $USE_GPU $CP_MODEL"
+echo "Running CellProfiler w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
+	$NUCLEI_DIAMETER_RANGE $SIZE_SMOOTHING_FILTER"
 
 # We run a (singularity) container with the provided ENV variables.
 # The container is already downloaded as a .simg file at $IMAGE_PATH.
-# This specific container is (BiaFlow's) CellPose, with parameters to run it 'locally'.
-singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
+# This specific container is (BiaFlow's) cellprofiler, with parameters to run it 'locally'.
+singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellprofiler-$IMAGE_VERSION.simg \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
 	--local \
-	--diameter $DIAMETER --prob_threshold $PROB_THRESHOLD \
-	--nuc_channel $NUC_CHANNEL \
-	--use_gpu $USE_GPU \
-	--cp_model $CP_MODEL \
+	--nuclei_diameter_range $NUCLEI_DIAMETER_RANGE --size_smoothing_filter $SIZE_SMOOTHING_FILTER \
 	-nmc
