@@ -28,6 +28,7 @@
 
 # Define a name for the logfile of this job. %4j will add the 'j'ob ID variable
 #SBATCH --output=cellpose-%4j.log
+#SBATCH --open-mode=append
 
 # Turn on mail notification. There are many possible self-explaining values:
 # NONE, BEGIN, END, FAIL, ALL (including all aforementioned)
@@ -67,9 +68,7 @@ timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpo
 # If the command exits due to the time limit, requeue this job
 if [ "$?" -eq "124" ]; then
 	echo "Job timed out, requeueing ..."
-	# scontrol update jobid=$SLURM_JOB_ID --output-append=cellpose-$SLURM_JOB_ID.log
-	echo "Requeueing this job."
-	scontrol requeue $SLURM_JOB_ID --open-mode=append
+	scontrol requeue $SLURM_JOB_ID
 else 
 	echo "Job completed successfully."
 fi
