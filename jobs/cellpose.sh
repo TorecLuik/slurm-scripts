@@ -67,9 +67,9 @@ timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpo
 # If the command exits due to the time limit, requeue this job
 if [ "$?" -eq "124" ]; then
 	echo "Job timed out, requeueing ..."
-	scontrol update jobid=$SLURM_JOB_ID --output-append=cellpose-$SLURM_JOB_ID.log
+	# scontrol update jobid=$SLURM_JOB_ID --output-append=cellpose-$SLURM_JOB_ID.log
 	echo "Requeueing this job."
-	scontrol requeue $SLURM_JOB_ID
+	scontrol requeue $SLURM_JOB_ID --open-mode=append
 else 
 	echo "Job completed successfully."
 fi
