@@ -27,13 +27,13 @@
 #SBATCH --mem=5GB
 
 # Define a name for the logfile of this job. %4j will add the 'j'ob ID variable
+# Use append so that we keep the old log when we requeue this job
 #SBATCH --output=cellpose-%4j.log
 #SBATCH --open-mode=append
 
 # Turn on mail notification. There are many possible self-explaining values:
 # NONE, BEGIN, END, FAIL, ALL (including all aforementioned)
 # For more values, check "man sbatch"
-#SBATCH --mail-user=t.t.luik@amsterdamumc.nl
 #SBATCH --mail-type=END,FAIL
 
 # You may not place any commands before the last SBATCH directive
@@ -46,15 +46,10 @@
 echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
 	$DIAMETER $PROB_THRESHOLD $NUC_CHANNEL $USE_GPU $CP_MODEL"
 
-# extract Timeout
-TIMEOUT=$(expr $(scontrol show job $SLURM_JOB_ID | awk '/TimeLimit/ {split($0,a,"="); split(a[3],b,":"); print b[2]}') - 1)
-echo "Timeout set to ${TIMEOUT} minutes"
-
 # We run a (singularity) container with the provided ENV variables.
 # The container is already downloaded as a .simg file at $IMAGE_PATH.
 # This specific container is (BiaFlow's) CellPose, with parameters to run it 'locally'.
-# Timeout command will timeout before the job ends, to requeue if we are still busy processing
-timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
+singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
@@ -65,10 +60,5 @@ timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpo
 	--cp_model $CP_MODEL \
 	-nmc
 
-# If the command exits due to the time limit, requeue this job
-if [ "$?" -eq "124" ]; then
-	echo "Job timed out, requeueing ..."
-	scontrol requeue $SLURM_JOB_ID
-else 
-	echo "Job completed successfully."
-fi
+echo "Job completed successfully."
+
