@@ -28,7 +28,8 @@
 
 # Define a name for the logfile of this job. %4j will add the 'j'ob ID variable
 # Use append so that we keep the old log when we requeue this job
-#SBATCH --output=cellpose-%4j.log
+# We use omero, so that we can recognize them from Omero job code
+#SBATCH --output=omero-%4j.log
 #SBATCH --open-mode=append
 
 # Turn on mail notification. There are many possible self-explaining values:

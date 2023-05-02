@@ -26,7 +26,7 @@
 #SBATCH --mem=5GB
 
 # Define a name for the logfile of this job. %4j will add the 'j'ob ID variable
-#SBATCH --output=deepcell-%4j.log
+#SBATCH --output=omero-%4j.log
 
 # Turn on mail notification. There are many possible self-explaining values:
 # NONE, BEGIN, END, FAIL, ALL (including all aforementioned)
