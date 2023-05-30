@@ -55,7 +55,7 @@ echo "Timeout set to ${TIMEOUT} minutes"
 # The container is already downloaded as a .simg file at $IMAGE_PATH.
 # This specific container is (BiaFlow's) CellPose, with parameters to run it 'locally'.
 # Timeout command will timeout before the job ends, to requeue if we are still busy processing
-timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose-$IMAGE_VERSION.simg \
+timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose_$IMAGE_VERSION.sif \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
