@@ -44,7 +44,7 @@
 ##############################
 
 # Std out will get parsed into the logfile, so it is useful to log all your steps and variables
-echo "Running CellPose w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
+echo "Running CellPose w/ $IMAGE_PATH | $SINGULARITY_IMAGE | $DATA_PATH | \
 	$DIAMETER $PROB_THRESHOLD $NUC_CHANNEL $USE_GPU $CP_MODEL"
 
 # Set TIMEOUT to 1 min less than the sbatch time
@@ -55,7 +55,7 @@ echo "Timeout set to ${TIMEOUT} minutes"
 # The container is already downloaded as a .simg file at $IMAGE_PATH.
 # This specific container is (BiaFlow's) CellPose, with parameters to run it 'locally'.
 # Timeout command will timeout before the job ends, to requeue if we are still busy processing
-timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/w_nucleisegmentation-cellpose_$IMAGE_VERSION.sif \
+timeout ${TIMEOUT}m singularity run --nv $IMAGE_PATH/$SINGULARITY_IMAGE \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \

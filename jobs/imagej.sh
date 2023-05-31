@@ -41,13 +41,13 @@
 ##############################
 
 # Std out will get parsed into the logfile, so it is useful to log all your steps and variables
-echo "Running ImageJ w/ $IMAGE_PATH | $IMAGE_VERSION | $DATA_PATH | \
+echo "Running ImageJ w/ $IMAGE_PATH | $SINGULARITY_IMAGE  | $DATA_PATH | \
 	$IJ_RADIUS $IJ_THRESHOLD"
 
 # We run a (singularity) container with the provided ENV variables.
 # The container is already downloaded as a .simg file at $IMAGE_PATH.
 # This specific container is (BiaFlow's) imagej, with parameters to run it 'locally'.
-singularity run --nv $IMAGE_PATH/w_nucleisegmentation-imagej_$IMAGE_VERSION.sif \
+singularity run --nv $IMAGE_PATH/$SINGULARITY_IMAGE \
 	--infolder $DATA_PATH/data/in \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
