@@ -6,7 +6,7 @@
 # You can override all of these settings on the commandline, e.g. sbatch <this-script> --job-name=newJob
 
 # Give your job a name, so you can recognize it in the queue overview
-#SBATCH --job-name=omero-job-stardist
+#SBATCH --job-name=omero-job-spotcounting
 
 # Define, how many cpus you need. Here we ask for 4 CPU cores.
 #SBATCH --cpus-per-task=4
@@ -41,8 +41,8 @@
 ##############################
 
 # Std out will get parsed into the logfile, so it is useful to log all your steps and variables
-echo "Running stardist Job w/ $IMAGE_PATH | $SINGULARITY_IMAGE | $DATA_PATH | $SCRIPT_PATH | $DO_CONVERT | \
-	--stardist_prob_t $STARDIST_PROB_T --stardist_nms_t $STARDIST_NMS_T --stardist_norm_perc_low $STARDIST_NORM_PERC_LOW --stardist_norm_perc_high $STARDIST_NORM_PERC_HIGH" 
+echo "Running spotcounting Job w/ $IMAGE_PATH | $SINGULARITY_IMAGE | $DATA_PATH | $SCRIPT_PATH | $DO_CONVERT | \
+	--cell_mask_suffix $CELL_MASK_SUFFIX --aggregate_mask_suffix $AGGREGATE_MASK_SUFFIX --column_name_counts $COLUMN_NAME_COUNTS --column_name_cells $COLUMN_NAME_CELLS" 
 
 # Load singularity module if needed
 echo "Loading Singularity/Apptainer if needed..."
@@ -79,6 +79,6 @@ singularity run --nv $IMAGE_PATH/$SINGULARITY_IMAGE \
 	--outfolder $DATA_PATH/data/out \
 	--gtfolder $DATA_PATH/data/gt \
 	--local \
-	--stardist_prob_t $STARDIST_PROB_T --stardist_nms_t $STARDIST_NMS_T --stardist_norm_perc_low $STARDIST_NORM_PERC_LOW --stardist_norm_perc_high $STARDIST_NORM_PERC_HIGH \
+	--cell_mask_suffix $CELL_MASK_SUFFIX --aggregate_mask_suffix $AGGREGATE_MASK_SUFFIX --column_name_counts $COLUMN_NAME_COUNTS --column_name_cells $COLUMN_NAME_CELLS \
 	-nmc && echo "Job completed successfully."
 
